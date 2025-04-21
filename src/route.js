@@ -1,0 +1,44 @@
+const express = require("express");
+const router = express.Router();
+const userController = require("./controller/userController");
+const categoryController = require("./controller/categoryController");
+const subCategoryController = require("./controller/subCategoryController");
+const serviceController = require("./controller/serviceController");
+const repairController = require("./controller/repairController");
+const installationController = require("./controller/installationController");
+const bookingController = require("./controller/bookingController");
+const bannerController = require("./controller/bannerController");
+const addressController = require("./controller/addressController");
+const supportController = require("./controller/supportController");
+const venderController = require("./controller/venderController");
+const courseController = require("./controller/courseController");
+const batchController = require("./controller/batchController");
+const topicController = require("./controller/topicController");
+const academyCourseController = require("./controller/academyCourseController");
+const materialController  = require("./controller/materialController");
+const academyBatchController  = require("./controller/academyBatchController");
+const currentAffairController  = require("./controller/currentAffairesController");
+const adminController = require("./controller/adminController");
+
+router.use("/user", userController);
+router.use("/category", categoryController);
+router.use("/course", courseController);
+router.use("/academy-course", academyCourseController);
+router.use("/batch", batchController);
+router.use("/academy-batch", academyBatchController);
+router.use("/current-affair", currentAffairController);
+router.use("/topic", topicController);
+router.use("/material", materialController);
+router.use("/sub-category", subCategoryController);
+router.use("/service", serviceController);
+router.use("/repair", repairController);
+router.use("/installation", installationController);
+router.use("/booking", bookingController);
+router.use("/banner", bannerController);
+router.use("/address", addressController);
+router.use("/support", supportController);
+router.use("/vender", venderController);
+router.use("/admin", adminController);
+
+
+module.exports = router;
