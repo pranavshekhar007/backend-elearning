@@ -12,11 +12,6 @@
         "dest": "/index.js"
       }
     ],
-    "functions": {
-      "api/**/*.{js,ts}": {
-        "timeout": 30
-      }
-    },
     "env": {
       "DB_STRING": "mongodb+srv://pranavshekhar00:7zxJG2j5jZYeHR24@e-commerce.ezhlk83.mongodb.net/?retryWrites=true&w=majority&appName=e-commerce",
       "JWT_KEY": "Rdf7XzvyjY3pQrKbCAF6hl0WMeBKpI9sOQkCpd0fp8EVgDTjBk28TZAgQJUoiyh"
