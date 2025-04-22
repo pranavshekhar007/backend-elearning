@@ -39,8 +39,6 @@ const io = new Server(server, {
 })
 
 app.use('/uploads', express.static('uploads'))
-const PORT = process.env.PORT || 8000;
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -61,8 +59,7 @@ app.get("/", (req, res) => res.send(`Server listing on port ${PORT}`));
 app.use("/api", routes);
 app.all("*", (req, res) => res.status(404).json({ error: "404 Not Found" })); 
 
-
-
+const PORT = process.env.PORT || 8000;
 server.listen(PORT, () =>
   console.log(`Server running on ${PORT}`)
 );
