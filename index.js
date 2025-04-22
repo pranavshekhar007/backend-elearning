@@ -10,7 +10,8 @@ const app = express();
 const server = createServer(app);
 
 const allowedOrigins = [
-  "http://localhost:3000",
+  "https://frontend-elearning-beta.vercel.app/",
+  "http://localhost:3000"
 ];
 
 app.use(
