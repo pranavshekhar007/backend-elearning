@@ -4,62 +4,34 @@ const cors = require("cors");
 const path = require("path");
 const routes = require("./src/route");
 
+
 const app = express();
 
-const allowedOrigins = [
-  "https://frontend-elearning-beta.vercel.app",
-  "http://localhost:3000",
-];
 
-// CORS configuration
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS policy does not allow this origin"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use('/uploads', express.static('uploads'))
+const PORT = process.env.PORT || 8000;
 
-// Apply fallback CORS headers manually (as a fallback)
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
 
-// Static file handling for uploads
-app.use('/uploads', express.static('uploads'));
-
-// Middleware to handle JSON and URL encoded data
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Connect to MongoDB
-const mongoose = require("mongoose");
-mongoose
-  .connect(process.env.DB_STRING)
-  .then(() => {
-    console.warn("DB connection done again");
-  })
-  .catch((err) => {
-    console.error("DB connection error:", err);
-  });
 
-// Routes
+
+
+// connecting with database
+const mongoose = require("mongoose");
+mongoose.connect(process.env.DB_STRING
+).then(()=>{
+    console.warn("db connection done again")
+})
+
 app.get("/", (req, res) => res.send(`Server listing on port ${PORT}`));
 app.use("/api", routes);
-app.all("*", (req, res) => res.status(404).json({ error: "404 Not Found" }));
+app.all("*", (req, res) => res.status(404).json({ error: "404 Not Found" })); 
 
-// Start the server
-const PORT = process.env.PORT || 8000;
+
+
 app.listen(PORT, () =>
   console.log(`Server running on ${PORT}`)
 );
