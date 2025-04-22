@@ -10,8 +10,8 @@ const app = express();
 const server = createServer(app);
 
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://frontend-elearning-beta.vercel.app" // optional, for deployment
+  "https://frontend-elearning-beta.vercel.app",
+  "http://localhost:3000"
 ];
 
 
@@ -32,7 +32,7 @@ app.use(
 
 const io = new Server(server, {
   cors:{
-    origin:"*",
+    origin:"https://frontend-elearning-beta.vercel.app",
     methods:["GET", "POST"],
     credentials:true,
   }
