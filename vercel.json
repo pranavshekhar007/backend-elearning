@@ -1,20 +1,15 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "index.js",
-        "use": "@vercel/node"
-      }
+        {
+            "src": "index.js",
+            "use": "@vercel/node"
+        }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/index.js"
-      }
-    ],
-    "env": {
-      "DB_STRING": "mongodb+srv://pranavshekhar00:7zxJG2j5jZYeHR24@e-commerce.ezhlk83.mongodb.net/?retryWrites=true&w=majority&appName=e-commerce",
-      "JWT_KEY": "Rdf7XzvyjY3pQrKbCAF6hl0WMeBKpI9sOQkCpd0fp8EVgDTjBk28TZAgQJUoiyh"
-    }
-  }
-  
+        {
+            "src": "/(.*)",
+            "dest": "index.js"
+        }
+    ]
+}
