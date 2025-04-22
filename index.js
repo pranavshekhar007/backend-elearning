@@ -11,7 +11,7 @@ const server = createServer(app);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://frontend-elearning-beta.vercel.app/" // optional, for deployment
+  "https://frontend-elearning-beta.vercel.app" // optional, for deployment
 ];
 
 
