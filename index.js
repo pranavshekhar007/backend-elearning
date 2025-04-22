@@ -11,7 +11,7 @@ const server = createServer(app);
 
 // ✅ Fixed: Remove trailing slash from frontend URL
 const allowedOrigins = [
-  "https://frontend-elearning-beta.vercel.app/",
+  "https://frontend-elearning-beta.vercel.app",
   "http://localhost:3000"
 ];
 
