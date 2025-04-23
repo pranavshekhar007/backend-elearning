@@ -54,6 +54,7 @@ academyBatchController.post("/list", async (req, res) => {
     const sortOrder = sortByOrder === "asc" ? 1 : -1; 
     const sortOption = { [sortField]: sortOrder };
     const batchList = await AcedemyBatch.find(query)
+      .populate("categoryId", "name")
       .sort(sortOption)
       .limit(parseInt(pageCount))
       .skip(parseInt(pageNo-1) * parseInt(pageCount)); 
@@ -73,9 +74,9 @@ academyBatchController.post("/list", async (req, res) => {
     });
   }
 });
-academyBatchController.put("/update", upload.single("image"), async (req, res) => {
+academyBatchController.put("/update/:id", upload.single("image"), async (req, res) => {
     try {
-      const  id  = req.body._id;
+      const  id  = req.params.id;
       const batch = await AcedemyBatch.findById(id);
       if (!batch) {
         return sendResponse(res, 404, "Failed", {
@@ -123,7 +124,7 @@ academyBatchController.delete("/delete/:id", async (req, res) => {
           message: "Batch not found",
         });
       }
-      const imageUrl = category.image;
+      const imageUrl = batch.image;
       if (imageUrl) {
         const publicId = imageUrl.split("/").pop().split(".")[0]; // Extract public ID
         // Delete the image from Cloudinary
@@ -138,6 +139,7 @@ academyBatchController.delete("/delete/:id", async (req, res) => {
       await AcedemyBatch.findByIdAndDelete(id);
       sendResponse(res, 200, "Success", {
         message: "Batch and associated image deleted successfully!",
+        statusCode: 200,
       });
     } catch (error) {
       console.error(error);
@@ -149,7 +151,8 @@ academyBatchController.delete("/delete/:id", async (req, res) => {
 academyBatchController.get("/details/:id",  async (req, res) => {
   try {
     const { id } = req.params
-    const BatchDetails = await AcedemyBatch.findOne({_id:id});
+    const BatchDetails = await AcedemyBatch.findOne({_id:id})
+    .populate("categoryId", "name");;
       if (!BatchDetails) {
         return sendResponse(res, 404, "Failed", {
           message: "Batch not found",
