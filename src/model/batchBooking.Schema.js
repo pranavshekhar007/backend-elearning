@@ -9,7 +9,7 @@ const batchBookingSchema = mongoose.Schema({
   },
   signature: {
     type: String,
-    default: true,
+    default: "",
   },
   paymentId: {
     type: String,

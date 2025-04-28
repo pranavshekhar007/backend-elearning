@@ -55,6 +55,7 @@ academyCourseController.post("/list", async (req, res) => {
     const sortOrder = sortByOrder === "asc" ? 1 : -1; 
     const sortOption = { [sortField]: sortOrder };
     const courseList = await AcademyCourse.find(query)
+      .populate("categoryId", "name")
       .sort(sortOption)
       .limit(parseInt(pageCount))
       .skip(parseInt(pageNo-1) * parseInt(pageCount)); 
@@ -74,9 +75,9 @@ academyCourseController.post("/list", async (req, res) => {
     });
   }
 });
-academyCourseController.put("/update", upload.single("image"), async (req, res) => {
+academyCourseController.put("/update/:id", upload.single("image"), async (req, res) => {
     try {
-      const  id  = req.body._id;
+      const  id  = req.params.id;
       const course = await AcademyCourse.findById(id);
       if (!course) {
         return sendResponse(res, 404, "Failed", {
@@ -88,7 +89,7 @@ academyCourseController.put("/update", upload.single("image"), async (req, res) 
       if (req.file) {
         // Delete the old image from Cloudinary
         if (course.image) {
-          const publicId = category.image.split("/").pop().split(".")[0];
+          const publicId = course.image.split("/").pop().split(".")[0];
           await cloudinary.uploader.destroy(publicId, (error, result) => {
             if (error) {
               console.error("Error deleting old image from Cloudinary:", error);
@@ -139,6 +140,7 @@ academyCourseController.delete("/delete/:id", async (req, res) => {
       await AcademyCourse.findByIdAndDelete(id);
       sendResponse(res, 200, "Success", {
         message: "Academy course deleted successfully!",
+        statusCode: 200,
       });
     } catch (error) {
       console.error(error);
@@ -150,7 +152,8 @@ academyCourseController.delete("/delete/:id", async (req, res) => {
 academyCourseController.get("/details/:id",  async (req, res) => {
   try {
     const { id } = req.params
-    const CourseDetails = await AcademyCourse.findOne({_id:id});
+    const CourseDetails = await AcademyCourse.findOne({_id:id})
+    .populate("categoryId", "name");;
     const TopicList = await Topic.find({courseId:id});
     const MaterialList = await Material.find({academyCourseId:id});
     sendResponse(res, 200, "Success", {
